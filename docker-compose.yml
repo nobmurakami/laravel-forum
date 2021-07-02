@@ -19,5 +19,11 @@ services:
     volumes:
       - db-store:/var/lib/mysql
 
+  node:
+    image: node:12.8-alpine
+    volumes:
+      - ./backend:/work
+    working_dir: /work
+
 volumes:
   db-store:
