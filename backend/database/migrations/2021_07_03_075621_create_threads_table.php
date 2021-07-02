@@ -17,7 +17,7 @@ class CreateThreadsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('name', 255);
+            $table->string('title', 255);
             $table->timestamps();
             $table->softDeletes();
         });
