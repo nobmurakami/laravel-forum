@@ -32,6 +32,7 @@ const app = new Vue({
 });
 
 // トースト通知
+window.toastr = require('toastr');
 const showToastr = $(function () {
     $('[data-toastr]').each(function () {
         console.log($(this).data('toastr'));

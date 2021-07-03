@@ -76,5 +76,8 @@
             @yield('content')
         </main>
     </div>
+
+    @include('layouts.partials.toastr')
+
 </body>
 </html>
