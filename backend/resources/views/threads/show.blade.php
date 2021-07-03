@@ -6,7 +6,9 @@
     @if (Auth::guard('user')->check())
         {{-- スレッドの編集・削除ボタン --}}
         <div class="d-flex">
-                <button type="button" onclick="location.href='{{ route("threads.edit", $thread) }}'" class="btn btn-outline-secondary btn-sm mt-3">スレッドタイトルの編集</button>
+            <form action="{{ route('threads.edit', $thread) }}" method="get">
+                <button type="submit" class="btn btn-outline-secondary btn-sm mt-3">スレッドタイトルの編集</button>
+            </form>
             <form action="{{ route('threads.destroy', $thread) }}" method="post">
                 @csrf
                 @method('delete')
@@ -30,10 +32,12 @@
 
                             {{-- 投稿の編集・削除ボタン --}}
                             <div class="col-sm-4 d-flex justify-content-end align-items-start">
-                                @if (Auth::guard('user')->check() && Auth::user()->can('update', $post))
-                                    <button type="button" onclick='location.href="{{ route('posts.edit', $post) }}"' class="btn btn-outline-secondary btn-sm">編集</button>
+                                @if (Auth::guard('user')->check())
+                                    <form action="{{ route('posts.edit', $post) }}" method="get">
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm">編集</button>
+                                    </form>
                                 @endif
-                                @if (Auth::guard('user')->check() && Auth::user()->can('delete', $post))
+                                @if (Auth::guard('user')->check())
                                     <form action="{{ route('posts.destroy', $post) }}" method="post">
                                         @csrf
                                         @method('delete')
