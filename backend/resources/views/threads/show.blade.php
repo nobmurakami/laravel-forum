@@ -87,7 +87,7 @@
                         {{-- 画像 --}}
                         @if (isset($post->image_path))
                             <figure class="figure">
-                                <img src="{{ asset('storage/' . $post->image_path) . '?' . uniqid() }}" class="img-thumbnail post-image">
+                                <img src="{{ asset('storage/' . $post->image_path) }}" class="img-thumbnail post-image">
                             </figure>
                         @endif
 
