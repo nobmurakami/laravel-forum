@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Thread;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class ThreadController extends Controller
@@ -26,7 +27,10 @@ class ThreadController extends Controller
      */
     public function create()
     {
-        //
+        $thread = new Thread();
+        $post = new Post();
+
+        return view('threads.create', ['thread' => $thread, 'post' => $post]);
     }
 
     /**
