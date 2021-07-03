@@ -12,7 +12,7 @@ class Thread extends Model
     protected $fillable = ['title', 'user_id'];
 
     public static $requestAttrs = [
-        'thread.title' => 'スレッドタイトル',
+        'thread.title' => 'タイトル',
     ];
 
     public static $rules = [

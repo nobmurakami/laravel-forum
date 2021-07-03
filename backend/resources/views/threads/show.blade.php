@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@include('shared.thread-header', ['thread' => $thread])
+    @include('shared.thread-header', ['thread' => $thread])
 
     @if (Auth::guard('user')->check())
         <div class="d-sm-flex justify-content-between align-items-start mt-4">
