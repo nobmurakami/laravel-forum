@@ -20,6 +20,9 @@ class CreatePostsTable extends Migration
             $table->unsignedBigInteger('thread_id');
             $table->foreign('thread_id')->references('id')->on('threads');
             $table->text('content');
+            $table->string('image_path')->nullable();
+            $table->unsignedBigInteger('reply_to_id')->nullable();
+            $table->foreign('reply_to_id')->references('id')->on('posts');
             $table->timestamps();
             $table->softDeletes();
         });
