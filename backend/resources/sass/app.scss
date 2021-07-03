@@ -12,3 +12,46 @@
 @import '~@fortawesome/fontawesome-free/scss/solid';
 @import '~@fortawesome/fontawesome-free/scss/regular';
 @import '~@fortawesome/fontawesome-free/scss/brands';
+
+body {
+  letter-spacing: 0.1em;
+  text-align: justify;
+}
+
+.post-index {
+  margin-bottom: 90px;
+}
+
+.post-image {
+  max-height: 400px;
+  width: auto;
+}
+
+.post-btn {
+  position: fixed;
+  bottom: 20px;
+
+  .btn {
+    float:right;
+    margin-right: 30px;
+    height: 80px;
+    width: 80px;
+    border-radius: 20%;
+  }
+}
+
+section.post-card {
+  .post-link {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    opacity: 0;
+    transition: all 0.2s ease;
+  }
+
+  &:hover {
+    .post-link {
+      opacity: 1;
+    }
+  }
+}

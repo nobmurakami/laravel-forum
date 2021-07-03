@@ -18,12 +18,18 @@ class PostsTableSeeder extends Seeder
                 'thread_id' => 1,
                 'content' => 'ここは総合掲示板です',
                 'image_path' => 'post_images/1.jpg',
+                'reply_to_id' => null,
+                'created_at' => '2021-06-02 10:00:00',
+                'updated_at' => '2021-06-02 10:00:00',
             ],
             [
                 'user_id' => 2,
                 'thread_id' => 1,
                 'content' => 'こんにちは',
                 'image_path' => 'post_images/2.jpg',
+                'reply_to_id' => 1,
+                'created_at' => '2021-06-02 11:00:00',
+                'updated_at' => '2021-06-02 11:00:00',
             ],
             [
                 'user_id' => 3,
@@ -40,12 +46,18 @@ class PostsTableSeeder extends Seeder
 
 ようやくの思いで笹原を這い出すと向うに大きな池がある。吾輩は池の前に坐ってどうしたらよかろうと考えて見た。別にこれという分別も出ない。しばらくして泣いたら書生がまた迎に来てくれるかと考え付いた。ニャー、ニャーと試みにやって見たが誰も来ない。そのうち池の上をさらさらと風が渡って日が暮れかかる。腹が非常に減って来た。泣きたくても声が出ない。仕方がない、何でもよいから食物のある所まであるこうと決心をしてそろりそろりと池を左りに廻り始めた。どうも非常に苦しい。そこを我慢して無理やりに這って行くとよう",
                 'image_path' => 'post_images/3.jpg',
+                'reply_to_id' => null,
+                'created_at' => '2021-06-02 11:00:00',
+                'updated_at' => '2021-06-02 11:00:00',
             ],
             [
-                'user_id' => 3,
+                'user_id' => 1,
                 'thread_id' => 1,
                 'content' => 'よろしく',
                 'image_path' => null,
+                'reply_to_id' => 2,
+                'created_at' => '2021-06-02 12:00:00',
+                'updated_at' => '2021-06-02 12:00:00',
             ],
         ]);
     }

@@ -19,14 +19,14 @@
         </div>
     @endif
 
-    <main class="mt-4 post-index">
+    <div class="mt-4 post-index">
         @if ($posts->isNotEmpty())
             @foreach ($posts as $post)
                 <section class="post-card card shadow-sm mb-2">
                     <div class="d-flex flex-column card-body">
                         <div class="row mb-2">
                             <a id="post_{{ $post->id }}" class="anchor"></a>
-                            <h5 class="col card-title font-weight-bold">{{ $post->user->name }}</h5>
+                            <h5 class="col card-title">{{ $post->user->name }}</h5>
 
                             {{-- 投稿の編集・削除ボタン --}}
                             <div class="col-sm-4 d-flex justify-content-end align-items-start">
@@ -50,7 +50,7 @@
                         {{-- 返信先の投稿 --}}
                         @if (isset($post->reply_to_id))
                             <div class="align-items-center mb-2">
-                                <a class="" data-toggle="popover" data-content="@include('threads.partials.reply-to-popover')">{{ $post->replyTo->name ?? '匿名' }}</a><span class="text-muted">さんの投稿へのコメント</span>
+                                <a href="#post_{{ $post->replyTo->id }}" role="button" data-toggle="popover" data-content="@include('threads.partials.reply-to-popover')">{{ $post->replyTo->user->name }}</a><span class="text-muted">さんの投稿へのコメント</span>
                             </div>
                         @endif
 
@@ -79,7 +79,7 @@
                         {{-- コメント --}}
                         <div class="d-flex align-items-center">
                             @if ($post->replies->isNotEmpty())
-                                <button class="btn btn-link text-dark" data-toggle="popover" title="この投稿へのコメント（{{ $post->replies->count() }}件）" data-content="@include('threads.partials.replies-popover')"><i class="far fa-comment"></i>&nbsp;{{ $post->replies->count() }}</button>
+                                <button class="btn btn-link text-decoration-none" data-toggle="popover" title="この投稿へのコメント（{{ $post->replies->count() }}件）" data-content="@include('threads.partials.replies-popover')"><i class="far fa-comment"></i>&nbsp;{{ $post->replies->count() }}</button>
                             @endif
 
                             @if (Auth::guard('user')->check())
@@ -100,10 +100,10 @@
         @else
             <p>まだ投稿がありません。</p>
         @endif
-    </main>
+    </div>
 
     @if (Auth::guard('user')->check())
-        <div class="post-btn">
+        <div class="container post-btn">
             <a href="{{ route('threads.posts.create', $thread) }}" role="button" class="btn btn-primary d-flex flex-column justify-content-center">
                 <div class=""><i class="fas fa-pen fa-2x"></i></div>
                 <div>投稿</div>
