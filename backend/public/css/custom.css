@@ -1,0 +1,10 @@
+.post-image {
+  max-height: 400px;
+  width: auto;
+}
+
+.post-btn {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+}
