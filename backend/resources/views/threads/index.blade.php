@@ -2,10 +2,10 @@
 
 @section('content')
     @if (Auth::guard('user')->check())
-        <a href="{{ route('threads.create') }}" role="button" class="btn btn-primary mb-4">スレッドを作成する</a>
+        <a href="{{ route('threads.create') }}" role="button" class="btn btn-primary">スレッドを作成する</a>
     @endif
 
-    <main>
+    <div class="mt-4">
         @if ($threads->isNotEmpty())
             @foreach ($threads as $thread)
                 <section class="card shadow-sm mb-2">
@@ -20,5 +20,5 @@
         @else
             <p>まだスレッドがありません。</p>
         @endif
-    </main>
+    </div>
 @endsection

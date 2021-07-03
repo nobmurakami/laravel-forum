@@ -1,23 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('shared.thread-header', ['thread' => $thread])
+@include('shared.thread-header', ['thread' => $thread])
 
     @if (Auth::guard('user')->check())
-        {{-- スレッドの編集・削除ボタン --}}
-        <div class="d-flex">
-            <form action="{{ route('threads.edit', $thread) }}" method="get">
-                <button type="submit" class="btn btn-outline-secondary btn-sm mt-3">スレッドタイトルの編集</button>
-            </form>
-            <form action="{{ route('threads.destroy', $thread) }}" method="post">
-                @csrf
-                @method('delete')
-                <button type="submit" class="btn btn-outline-secondary btn-sm mt-3 ml-2" onclick='return confirm("削除しますか？");'>スレッドの削除</button>
-            </form>
-        </div>
+        <div class="d-sm-flex justify-content-between align-items-start mt-4">
+            {{-- 投稿ボタン --}}
+            <div class="mb-2 mb-sm-n2">
+                <a href="{{ route('threads.posts.create', $thread) }}" role="button" class="btn btn-primary">投稿する</a>
+            </div>
 
-        <div class="mt-4">
-            <a href="{{ route('threads.posts.create', $thread) }}" role="button" class="btn btn-primary">投稿する</a>
+            {{-- スレッドアクション --}}
+            <div class="d-flex">
+                {{-- スレッドタイトル編集ボタン --}}
+                <form action="{{ route('threads.edit', $thread) }}" method="get">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm">スレッドタイトルの編集</button>
+                </form>
+
+                {{-- スレッド削除ボタン --}}
+                <form action="{{ route('threads.destroy', $thread) }}" method="post">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="btn btn-outline-secondary btn-sm ml-2" onclick='return confirm("削除しますか？");'>スレッドの削除</button>
+                </form>
+            </div>
         </div>
     @endif
 
@@ -26,40 +32,55 @@
             @foreach ($posts as $post)
                 <section class="post-card card shadow-sm mb-2">
                     <div class="d-flex flex-column card-body">
-                        <div class="row mb-2">
-                            <a id="post_{{ $post->id }}" class="anchor"></a>
-                            <h5 class="col card-title">{{ $post->user->name }}</h5>
+                        <a id="post_{{ $post->id }}" class="anchor"></a>
 
-                            {{-- 投稿の編集・削除ボタン --}}
-                            <div class="col-sm-4 d-flex justify-content-end align-items-start">
-                                @if (Auth::guard('user')->check())
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">{{ $post->user->name }}</h5>
+
+                            {{-- 投稿アクションメニュー --}}
+                            <div class="dropdown float-right post-action ml-2">
+                                <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-caret-down fa-lg"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    @if (Auth::guard('user')->check())
                                     <form action="{{ route('posts.edit', $post) }}" method="get">
-                                        <button type="submit" class="btn btn-outline-secondary btn-sm">編集</button>
+                                        <button type="submit" class="dropdown-item">編集</button>
                                     </form>
-                                @endif
-                                @if (Auth::guard('user')->check())
+                                    @endif
+
+                                    @if (Auth::guard('user')->check())
                                     <form action="{{ route('posts.destroy', $post) }}" method="post">
                                         @csrf
                                         @method('delete')
-                                        <button type="submit" class="btn btn-outline-secondary btn-sm ml-2" onclick='return confirm("削除しますか？");'>削除</button>
+                                        <button type="submit" class="dropdown-item" onclick='return confirm("削除しますか？");'>削除</button>
                                     </form>
-                                @endif
-                            </div>
+                                    @endif
 
+                                    @if (Auth::guard('user')->check())
+                                    <form action="{{ route('posts.image.destroy', $post) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="dropdown-item" onclick='return confirm("画像を削除しますか？");'>画像の削除</button>
+                                    </form>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
-                        <h6 class="font-weight-normal card-subtitle mb-2 text-muted align-items-center">
+
+                        <h6 class="font-weight-normal card-subtitle text-muted align-items-center">
                             {{ $post->created_at }}{{ ($post->updated_at > $post->created_at) ? '（編集済）' : '' }}
                         </h6>
 
                         {{-- 返信先の投稿 --}}
                         @if (isset($post->reply_to_id))
-                            <div class="align-items-center mb-2">
+                            <div class="align-items-center">
                                 <a href="#post_{{ $post->replyTo->id }}" role="button" data-toggle="popover" data-content="@include('threads.partials.reply-to-popover')">{{ $post->replyTo->user->name }}</a><span class="text-muted">さんの投稿へのコメント</span>
                             </div>
                         @endif
 
                         {{-- 本文 --}}
-                        <p class="card-text">
+                        <p class="card-text mt-2">
                             {{ safeBr($post->content) }}
                         </p>
 
@@ -67,37 +88,26 @@
                         @if (isset($post->image_path))
                             <figure class="figure">
                                 <img src="{{ asset('storage/' . $post->image_path) . '?' . uniqid() }}" class="img-thumbnail post-image">
-                                {{-- 画像削除リンク --}}
-                                @if (Auth::guard('user')->check() && Auth::user()->can('update', $post))
-                                    <figcaption class="figure-caption">
-                                        <form action="{{ route('posts.image.destroy', $post) }}" method="post">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-link text-reset" onclick='return confirm("画像を削除しますか？");'>画像を削除する</button>
-                                        </form>
-                                    </figcaption>
-                                @endif
                             </figure>
                         @endif
 
                         {{-- コメント --}}
                         <div class="d-flex align-items-center">
                             @if ($post->replies->isNotEmpty())
-                                <button class="btn btn-link text-decoration-none" data-toggle="popover" title="この投稿へのコメント（{{ $post->replies->count() }}件）" data-content="@include('threads.partials.replies-popover')"><i class="far fa-comment"></i>&nbsp;{{ $post->replies->count() }}</button>
+                                <button class="btn btn-link text-decoration-none py-0 px-1 mr-2" data-toggle="popover" title="この投稿へのコメント（{{ $post->replies->count() }}件）" data-content="@include('threads.partials.replies-popover')"><i class="far fa-comment"></i>&nbsp;{{ $post->replies->count() }}</button>
                             @endif
 
                             @if (Auth::guard('user')->check())
-                                <a href="{{ route('posts.reply', $post) }}" role="button" class="btn btn-outline-dark btn-sm font-weight-bold">コメントする</a>
+                                <a href="{{ route('posts.reply', $post) }}" role="button" class="btn btn-outline-primary btn-sm font-weight-bold comment-btn">コメントする</a>
                             @endif
                         </div>
 
-                    </div>
-
-                    {{-- 投稿のURL取得用リンク --}}
-                    <div class="post-link">
-                        <a href="#post_{{ $post->id }}" class="text-muted">
-                            <i class="fas fa-hashtag fa-lg"></i>
-                        </a>
+                        {{-- 投稿のURL取得用リンク --}}
+                        <div class="post-link">
+                            <a href="#post_{{ $post->id }}" class="text-muted">
+                                <i class="fas fa-hashtag fa-lg"></i>
+                            </a>
+                        </div>
                     </div>
                 </section>
             @endforeach
