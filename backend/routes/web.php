@@ -11,10 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'ThreadController@index');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('threads', 'ThreadController');
+Route::get('/posts/{replyTo}/reply', 'PostController@reply')->name('posts.reply');
+Route::resource('threads.posts', 'PostController')->shallow()->only([
+    'create', 'store', 'edit', 'update', 'destroy'
+]);
+Route::delete('post_images/{post}', 'PostController@destroyImage')->name('posts.image.destroy');
