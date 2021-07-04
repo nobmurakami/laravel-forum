@@ -11,5 +11,10 @@
             <img id="preview" src="{{ asset('images/image_placeholder.png') }}" class="img-thumbnail img-preview">
         @endif
     </div>
-    <input type="file" accept="image/jpeg,image/png,image/gif" name="post[image]" id="image" data-img-tag-id="#preview" class="form-control-file">
+    <div class="input-group">
+        <div class="custom-file">
+            <input type="file" accept="image/jpeg,image/png,image/gif" name="post[image]" class="custom-file-input" id="image" data-img-tag-id="#preview" >
+            <label class="custom-file-label" for="image" data-browse="参照">パソコンからファイルを選択</label>
+        </div>
+    </div>
 </div>

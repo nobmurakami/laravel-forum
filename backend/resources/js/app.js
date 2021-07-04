@@ -73,6 +73,7 @@ const previewImage = $(function () {
 });
 
 // カスタムファイル入力
+import bsCustomFileInput from 'bs-custom-file-input';
 const customFileInput = $(function ()  {
     bsCustomFileInput.init();
 });
