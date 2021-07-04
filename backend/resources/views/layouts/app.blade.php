@@ -56,9 +56,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right pt-0" aria-labelledby="navbarDropdown">
-                                    <div class="bg-primary text-light p-1 mb-2 text-center">
+                                    <span class="dropdown-item-text bg-primary text-light text-center mb-2">
                                         {{ Auth::user()->name }}
-                                    </div>
+                                    </span>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
