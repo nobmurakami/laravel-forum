@@ -72,7 +72,6 @@ section.post-card {
     transition: all 0.2s ease;
   }
 
-  .post-action,
   .comment-btn {
     opacity: 0;
     transition: all 0.2s ease;
@@ -80,7 +79,6 @@ section.post-card {
 
   &:hover {
     .post-link,
-    .post-action,
     .comment-btn {
       opacity: 1;
     }

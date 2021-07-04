@@ -2688,7 +2688,7 @@ textarea.form-control.is-invalid {
 .btn:focus,
 .btn.focus {
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(149, 97, 226, 0.25);
+  box-shadow: none;
 }
 
 .btn.disabled,
@@ -17399,14 +17399,12 @@ section.post-card .post-link {
   transition: all 0.2s ease;
 }
 
-section.post-card .post-action,
 section.post-card .comment-btn {
   opacity: 0;
   transition: all 0.2s ease;
 }
 
 section.post-card:hover .post-link,
-section.post-card:hover .post-action,
 section.post-card:hover .comment-btn {
   opacity: 1;
 }

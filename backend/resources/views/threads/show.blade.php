@@ -43,8 +43,8 @@
                             {{-- 投稿アクションメニュー --}}
                             @canany(['update', 'delete'], $post)
                                 <div class="dropdown float-right post-action ml-2">
-                                    <button class="btn btn-outline-secondary btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-caret-down fa-lg"></i>
+                                    <button class="btn btn-link text-muted" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                                         @can('update', $post)
