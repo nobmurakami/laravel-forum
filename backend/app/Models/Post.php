@@ -12,7 +12,7 @@ class Post extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['content', 'image_path', 'user_id', 'board_id', 'reply_to_id'];
+    protected $fillable = ['content', 'image_path', 'user_id', 'thread_id', 'reply_to_id'];
 
     public static $requestAttrs = [
         'post.content' => '内容',
