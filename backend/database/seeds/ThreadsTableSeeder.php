@@ -15,7 +15,7 @@ class ThreadsTableSeeder extends Seeder
         DB::table('threads')->insert([
             [
                 'user_id' => 1,
-                'title' => '総合掲示板',
+                'title' => '総合スレッド',
                 'created_at' => '2021-06-02 10:00:00',
                 'updated_at' => '2021-06-02 10:00:00',
             ],

@@ -16,7 +16,7 @@ class PostsTableSeeder extends Seeder
             [
                 'user_id' => 1,
                 'thread_id' => 1,
-                'content' => 'ここは総合掲示板です',
+                'content' => 'ここは総合スレッドです',
                 'image_path' => 'post_images/1.jpg',
                 'reply_to_id' => null,
                 'created_at' => '2021-06-02 10:00:00',
