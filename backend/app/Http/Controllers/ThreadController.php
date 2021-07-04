@@ -144,6 +144,20 @@ class ThreadController extends Controller
      */
     public function destroy(Thread $thread)
     {
-        //
+        $this->authorize('delete', $thread);
+
+        try {
+            $result = $thread->delete();
+            // 例外が発生せずに失敗したら例外を投げる
+            if (!$result) {
+                throw new \Exception('failed to delete thread');
+            }
+        } catch (\Exception $e) {
+            report($e);
+
+            return back()->with('msg_failure', 'スレッドの削除に失敗しました。しばらく時間をおいてから再度お試しください');
+        }
+
+        return redirect()->route('threads.index')->with('msg_success', 'スレッドを削除しました');
     }
 }
