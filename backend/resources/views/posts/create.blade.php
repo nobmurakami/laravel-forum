@@ -8,7 +8,7 @@
     <form action="{{ route('threads.posts.store', $thread) }}" method="post" enctype="multipart/form-data">
         @csrf
 
-        @include('shared.post-form', ['post' => $post])
+        @include('posts.partials.post-form', ['post' => $post])
 
         <button type="submit" class="btn btn-primary">投稿する</button>
         <a href="{{ route('threads.show', $thread) }}" role="button" class="btn btn-secondary">戻る</a>

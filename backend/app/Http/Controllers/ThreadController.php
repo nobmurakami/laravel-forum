@@ -96,7 +96,9 @@ class ThreadController extends Controller
      */
     public function edit(Thread $thread)
     {
-        //
+        $this->authorize('update', $thread);
+
+        return view('threads.edit', ['thread' => $thread]);
     }
 
     /**
@@ -106,9 +108,32 @@ class ThreadController extends Controller
      * @param  \App\Models\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Thread $thread)
+    public function update(ThreadRequest $request, Thread $thread)
     {
-        //
+        $this->authorize('update', $thread);
+
+        $validated = $request->validated();
+
+        try {
+            $thread->fill($validated['thread']);
+
+            $dirty = $thread->getDirty();
+            if (count($dirty) === 0) {
+                return redirect()->route('threads.show', $thread)->with('msg_info', '変更はありません');
+            }
+
+            $result = $thread->save();
+            // 例外が発生せずにfalseが返ってきたら例外を投げる
+            if (!$result) {
+                throw new \Exception('failed to save thread');
+            }
+        } catch (\Exception $e) {
+            report($e);
+
+            return back()->withInput()->with('msg_failure', 'スレッドタイトルの更新に失敗しました。しばらく時間をおいてから再度お試しください');
+        }
+
+        return redirect()->route('threads.show', $thread)->with('msg_success', 'スレッドタイトルを更新しました');
     }
 
     /**
