@@ -100,7 +100,7 @@ const popover = $(function ()  {
             // ポップオーバーからマウスカーソルが外れた時の処理
             $('.popover').on('mouseleave', function () {
                 if (button.data('state') === 'notPinned') {
-                    $(this).popover('hide');
+                    button.popover('hide');
                 }
             });
         }
@@ -108,14 +108,12 @@ const popover = $(function ()  {
         // ボタンからマウスカーソルが外れた時
         // ポップオーバーがピン留めされておらず、
         // ポップオーバーにマウスカーソルが乗っていなければポップオーバーを消す
-        if (button.data('state') === 'notPinned') {
-            // ボタンからポップオーバーまでの隙間を移動中に消さないよう、少し時間を置いてから判定する
-            setTimeout(function () {
-                if (!$(".popover:hover").length) {
-                    $(this).popover("hide");
-                }
-            }, 300);
-        }
+        // ボタンからポップオーバーまでの隙間を移動中に消さないよう、少し時間を置いてから判定する
+        setTimeout(function () {
+            if (!$(".popover:hover").length && (button.data('state') === 'notPinned')) {
+                button.popover("hide");
+            }
+        }, 300);
     }).on('click', function () {
         // ボタンをクリックした時
         if (button.data('state') === 'notPinned') {
