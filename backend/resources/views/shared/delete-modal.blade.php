@@ -12,7 +12,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">いいえ</button>
-                <button type="submit" class="btn btn-primary">はい</button>
+                <form action="{{ route($routeName, $model) }}" method="post">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="btn btn-danger">はい</button>
+                </form>
             </div>
         </div>
     </div>
