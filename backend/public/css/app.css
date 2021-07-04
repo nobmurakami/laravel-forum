@@ -17406,3 +17406,10 @@ section.post-card:hover .comment-btn {
   opacity: 1;
 }
 
+.user-menu {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
