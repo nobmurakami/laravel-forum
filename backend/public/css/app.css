@@ -17349,6 +17349,12 @@ body {
   text-align: justify;
 }
 
+a.anchor {
+  display: block;
+  position: relative;
+  top: -60px;
+}
+
 .post-index {
   margin-bottom: 90px;
 }
@@ -17395,15 +17401,6 @@ section.post-card .post-link {
   position: absolute;
   right: 8px;
   bottom: 8px;
-}
-
-section.post-card .comment-btn {
-  opacity: 0;
-  transition: all 0.2s ease;
-}
-
-section.post-card:hover .comment-btn {
-  opacity: 1;
 }
 
 .user-menu {

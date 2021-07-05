@@ -4,7 +4,7 @@
     @include('shared.thread-header', ['thread' => $thread])
 
     @if (Auth::guard('user')->check())
-        <div class="d-sm-flex justify-content-between align-items-start mt-4">
+        <div class="d-sm-flex justify-content-between align-items-start mt-3">
             {{-- 投稿ボタン --}}
             <div class="mb-2 mb-sm-n2">
                 <a href="{{ route('threads.posts.create', $thread) }}" role="button" class="btn btn-primary">投稿する</a>
@@ -33,14 +33,15 @@
     <div class="mt-4 post-index">
         @if ($posts->isNotEmpty())
             @foreach ($posts as $i => $post)
+                <a id="post_{{ $post->id }}" class="anchor"></a>
+
                 <section class="post-card card shadow-sm mb-2">
                     <div class="d-flex flex-column card-body">
-                        <a id="post_{{ $post->id }}" class="anchor"></a>
+                        @if ($post->trashed())
+                            <p class="text-muted mb-0">削除された投稿</p>
+                        @else
 
-                        <div class="d-flex justify-content-between">
-                            @if ($post->trashed())
-                                <p class="text-muted mb-0">削除された投稿</p>
-                            @else
+                            <div class="d-flex justify-content-between">
                                 <h5 class="card-title">{{ $post->user->name }}</h5>
 
                                 {{-- 投稿アクションメニュー --}}
@@ -96,7 +97,7 @@
 
                             {{-- 画像 --}}
                             @if (isset($post->image_path))
-                                <figure class="figure mt-2 mb-1">
+                                <figure class="figure mt-2 mb-0">
                                     <img src="{{ asset('storage/' . $post->image_path) }}" class="img-thumbnail post-image">
                                 </figure>
                             @endif
@@ -104,11 +105,11 @@
                             {{-- コメント --}}
                             <div class="d-flex align-items-center">
                                 @if ($post->replies->isNotEmpty())
-                                    <button class="btn btn-link text-decoration-none py-0 px-1 mt-2 mr-2" data-toggle="popover" title="この投稿へのコメント（{{ $post->replies->count() }}件）" data-content="@include('threads.partials.replies-popover')"><i class="far fa-comment"></i>&nbsp;{{ $post->replies->where('deleted_at', null)->count() }}</button>
+                                    <button class="btn btn-link text-decoration-none py-0 px-1 mt-3 mr-2" data-toggle="popover" title="この投稿へのコメント（{{ $post->replies->count() }}件）" data-content="@include('threads.partials.replies-popover')"><i class="far fa-comment"></i>&nbsp;{{ $post->replies->count() }}</button>
                                 @endif
 
                                 @if (Auth::guard('user')->check())
-                                    <a href="{{ route('posts.reply', $post) }}" role="button" class="btn btn-outline-primary btn-sm font-weight-bold comment-btn mt-2">コメントする</a>
+                                    <a href="{{ route('posts.reply', $post) }}" role="button" class="btn btn-outline-secondary btn-sm mt-3">コメントする</a>
                                 @endif
                             </div>
                         @endif

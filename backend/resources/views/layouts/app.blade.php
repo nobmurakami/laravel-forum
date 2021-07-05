@@ -21,7 +21,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar fixed-top navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -52,7 +52,7 @@
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link d-flex" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <div class="user-menu">{{ Auth::user()->name }}</div>
-                                    <div><i class="fas fa-caret-down"></i></div>
+                                    <div><i class="fas fa-caret-down ml-1"></i></div>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right pt-0" aria-labelledby="navbarDropdown">
@@ -76,7 +76,7 @@
             </div>
         </nav>
 
-        <main class="py-4 container">
+        <main class="mt-5 py-4 container">
             @yield('content')
         </main>
     </div>
