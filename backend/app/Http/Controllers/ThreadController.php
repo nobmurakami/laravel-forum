@@ -83,7 +83,7 @@ class ThreadController extends Controller
      */
     public function show(Thread $thread)
     {
-        $posts = $thread->posts;
+        $posts = $thread->posts()->withTrashed()->get();
 
         return view('threads.show', ['thread' => $thread, 'posts' => $posts]);
     }

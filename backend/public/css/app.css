@@ -17395,8 +17395,6 @@ section.post-card .post-link {
   position: absolute;
   right: 8px;
   bottom: 8px;
-  opacity: 0;
-  transition: all 0.2s ease;
 }
 
 section.post-card .comment-btn {
@@ -17404,7 +17402,6 @@ section.post-card .comment-btn {
   transition: all 0.2s ease;
 }
 
-section.post-card:hover .post-link,
 section.post-card:hover .comment-btn {
   opacity: 1;
 }

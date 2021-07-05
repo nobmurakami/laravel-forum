@@ -42,12 +42,12 @@ class Post extends Model
 
     public function replies()
     {
-        return $this->hasMany('App\Models\Post', 'reply_to_id');
+        return $this->hasMany('App\Models\Post', 'reply_to_id')->withTrashed();
     }
 
     public function replyTo()
     {
-        return $this->belongsTo('App\Models\Post', 'reply_to_id');
+        return $this->belongsTo('App\Models\Post', 'reply_to_id')->withTrashed();
     }
 
     public function saveImagePath(string $imagePath)

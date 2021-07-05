@@ -68,8 +68,6 @@ section.post-card {
     position: absolute;
     right: 8px;
     bottom: 8px;
-    opacity: 0;
-    transition: all 0.2s ease;
   }
 
   .comment-btn {
@@ -78,7 +76,6 @@ section.post-card {
   }
 
   &:hover {
-    .post-link,
     .comment-btn {
       opacity: 1;
     }
