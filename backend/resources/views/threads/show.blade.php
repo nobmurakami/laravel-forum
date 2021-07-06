@@ -44,7 +44,7 @@
                             <div class="d-flex justify-content-between">
                                 <h5 class="card-title">{{ $post->user->name }}</h5>
 
-                                {{-- 投稿アクションメニュー --}}
+                                {{-- 投稿アクションメニュー// --}}
                                 @canany(['update', 'delete'], $post)
                                     <div class="dropdown float-right post-action ml-2">
                                         <button class="btn btn-link text-muted" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -70,13 +70,14 @@
                                     @include('shared.delete-modal', ['id' => 'deleteImage_' . $post->id, 'title' => '確認', 'body' => '画像を削除しますか？', 'routeName' => 'posts.image.destroy', 'model' => $post])
                                     @include('shared.delete-modal', ['id' => 'deletePost_' . $post->id, 'title' => '確認', 'body' => '投稿を削除しますか？', 'routeName' => 'posts.destroy', 'model' => $post])
                                 @endcanany
+                                {{-- //投稿アクションメニュー --}}
                             </div>
 
                             <h6 class="font-weight-normal card-subtitle text-muted align-items-center">
-                                {{ $post->created_at }}{{ ($post->updated_at > $post->created_at) ? '（編集済）' : '' }}
+                                @include('shared.post-created-at', ['post' => $post])
                             </h6>
 
-                            {{-- 返信先の投稿 --}}
+                            {{-- 返信先の投稿// --}}
                             @if (isset($post->replyTo))
                                 @if ($post->replyTo->trashed())
                                     <span class="text-muted">削除された投稿へのコメント</span>
@@ -89,6 +90,7 @@
                                     </div>
                                 @endif
                             @endif
+                            {{-- //返信先の投稿 --}}
 
                             {{-- 本文 --}}
                             <p class="card-text mt-2 mb-0">
@@ -97,9 +99,7 @@
 
                             {{-- 画像 --}}
                             @if (isset($post->image_path))
-                                <figure class="figure mt-2 mb-0">
-                                    <img src="{{ asset('storage/' . $post->image_path) }}" class="img-thumbnail post-image">
-                                </figure>
+                                @include('shared.post-card-image', ['post' => $post])
                             @endif
 
                             {{-- コメント --}}

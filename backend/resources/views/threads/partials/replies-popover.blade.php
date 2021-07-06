@@ -7,12 +7,14 @@
             <p class='text-muted mb-0'>削除された投稿</p>
         @else
             <div class='font-weight-bold text-truncate'>{{ $reply->user->name }}</div>
-            <div class='text-muted'>{{ $reply->created_at }}</div>
+            <div class='text-muted'>
+                @include('shared.post-created-at', ['post' => $reply])
+            </div>
             <p class='mb-0'>{{ safeBr($reply->content) }}</p>
 
             {{-- 画像 --}}
             @if (isset($reply->image_path))
-                <img src='{{ asset("storage/" . $reply->image_path) }}' class='img-thumbnail popover-image'>
+                <img src='{{ asset("storage/" . $reply->image_path) }}' class='img-thumbnail post-image'>
             @endif
         @endif
     </a>

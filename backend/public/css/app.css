@@ -17369,14 +17369,12 @@ a.anchor {
   width: auto;
 }
 
-.reply-to-image {
+.reply-to .post-image {
   max-height: 200px;
-  width: auto;
 }
 
-.popover-image {
+.popover .post-image {
   max-height: 100px;
-  width: auto;
 }
 
 .img-preview {

@@ -39,16 +39,14 @@ a.anchor {
 .post-image {
   max-height: 400px;
   width: auto;
-}
 
-.reply-to-image {
-  max-height: 200px;
-  width: auto;
-}
+  .reply-to & {
+    max-height: 200px;
+  }
 
-.popover-image {
-  max-height: 100px;
-  width: auto;
+  .popover & {
+    max-height: 100px;
+  }
 }
 
 .img-preview {
