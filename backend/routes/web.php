@@ -23,3 +23,10 @@ Route::resource('threads.posts', 'PostController')->shallow()->only([
     'create', 'store', 'edit', 'update', 'destroy'
 ]);
 Route::delete('post_images/{post}', 'PostController@destroyImage')->name('posts.image.destroy');
+
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function (){
+    Route::get('/', 'AdminController@home')->name('home');
+    Route::resource('users', 'UserController')->only([
+        'index'
+    ]);
+});
