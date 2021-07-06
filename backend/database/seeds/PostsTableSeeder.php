@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Models\Post;
 
 class PostsTableSeeder extends Seeder
 {
@@ -12,15 +13,17 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('posts')->insert([
+        $now = Carbon::now();
+
+        Post::insert([
             [
                 'user_id' => 1,
                 'thread_id' => 1,
                 'content' => 'ここは総合スレッドです',
                 'image_path' => 'post_images/1.jpg',
                 'reply_to_id' => null,
-                'created_at' => '2021-06-02 10:00:00',
-                'updated_at' => '2021-06-02 10:00:00',
+                'created_at' => $now,
+                'updated_at' => $now,
                 'deleted_at' => null,
             ],
             [
@@ -29,8 +32,8 @@ class PostsTableSeeder extends Seeder
                 'content' => 'こんにちは',
                 'image_path' => 'post_images/2.jpg',
                 'reply_to_id' => null,
-                'created_at' => '2021-06-02 11:00:00',
-                'updated_at' => '2021-06-02 11:00:00',
+                'created_at' => $now,
+                'updated_at' => $now,
                 'deleted_at' => null,
             ],
             [
@@ -41,8 +44,8 @@ class PostsTableSeeder extends Seeder
 上野',
                 'image_path' => 'post_images/4.png',
                 'reply_to_id' => null,
-                'created_at' => '2021-06-02 12:00:00',
-                'updated_at' => '2021-06-02 12:00:00',
+                'created_at' => $now,
+                'updated_at' => $now,
                 'deleted_at' => null,
             ],
             [
@@ -51,8 +54,8 @@ class PostsTableSeeder extends Seeder
                 'content' => '池袋',
                 'image_path' => 'post_images/5.png',
                 'reply_to_id' => 3,
-                'created_at' => '2021-06-02 13:00:00',
-                'updated_at' => '2021-06-02 13:00:00',
+                'created_at' => $now,
+                'updated_at' => $now,
                 'deleted_at' => null,
             ],
             [
@@ -61,8 +64,8 @@ class PostsTableSeeder extends Seeder
                 'content' => '新宿',
                 'image_path' => 'post_images/6.png',
                 'reply_to_id' => 3,
-                'created_at' => '2021-06-02 14:00:00',
-                'updated_at' => '2021-06-02 14:00:00',
+                'created_at' => $now,
+                'updated_at' => $now,
                 'deleted_at' => null,
             ],
             [
@@ -71,9 +74,9 @@ class PostsTableSeeder extends Seeder
                 'content' => '削除テスト',
                 'image_path' => null,
                 'reply_to_id' => 3,
-                'created_at' => '2021-06-02 15:00:00',
-                'updated_at' => '2021-06-02 15:00:00',
-                'deleted_at' => '2021-06-02 17:00:00',
+                'created_at' => $now,
+                'updated_at' => $now,
+                'deleted_at' => $now,
             ],
             [
                 'user_id' => 2,
@@ -81,8 +84,8 @@ class PostsTableSeeder extends Seeder
                 'content' => 'コメント先の投稿が削除された場合の表示テスト',
                 'image_path' => null,
                 'reply_to_id' => '6',
-                'created_at' => '2021-06-02 16:00:00',
-                'updated_at' => '2021-06-02 16:00:00',
+                'created_at' => $now,
+                'updated_at' => $now,
                 'deleted_at' => null,
             ],
             [
@@ -101,8 +104,8 @@ class PostsTableSeeder extends Seeder
 ようやくの思いで笹原を這い出すと向うに大きな池がある。吾輩は池の前に坐ってどうしたらよかろうと考えて見た。別にこれという分別も出ない。しばらくして泣いたら書生がまた迎に来てくれるかと考え付いた。ニャー、ニャーと試みにやって見たが誰も来ない。そのうち池の上をさらさらと風が渡って日が暮れかかる。腹が非常に減って来た。泣きたくても声が出ない。仕方がない、何でもよいから食物のある所まであるこうと決心をしてそろりそろりと池を左りに廻り始めた。どうも非常に苦しい。そこを我慢して無理やりに這って行くとよう",
                 'image_path' => 'post_images/3.jpg',
                 'reply_to_id' => null,
-                'created_at' => '2021-06-02 11:00:00',
-                'updated_at' => '2021-06-02 11:00:00',
+                'created_at' => $now,
+                'updated_at' => $now,
                 'deleted_at' => null,
             ],
         ]);
