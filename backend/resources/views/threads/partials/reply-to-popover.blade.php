@@ -1,4 +1,4 @@
-<a href='#post_{{ $post->replyTo->id }}' class='text-body text-decoration-none'>
+<a href='{{ route("threads.show", $post->thread) . "#post_" . $post->replyTo->id }}' class='text-body text-decoration-none'>
     <div class='font-weight-bold text-truncate'>{{ $post->replyTo->user->name }}</div>
     <div class='text-muted'>
         @include('shared.post-created-at', ['post' => $post->replyTo])

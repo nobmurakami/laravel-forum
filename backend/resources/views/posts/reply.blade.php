@@ -9,14 +9,15 @@
             <h6 class="font-weight-normal card-subtitle text-muted">
                 @include('shared.post-created-at', ['post' => $replyTo])
             </h6>
+
+            @include('shared.reply-to-text', ['post' => $replyTo])
+
             <p class="card-text mt-2 mb-0">
                 {{ safeBr($replyTo->content) }}
             </p>
 
             {{-- 画像 --}}
-            @if (isset($replyTo->image_path))
-                @include('shared.post-card-image', ['post' => $replyTo])
-            @endif
+            @include('shared.post-card-image', ['post' => $replyTo])
         </div>
     </section>
 
