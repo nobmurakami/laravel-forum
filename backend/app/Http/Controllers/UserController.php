@@ -12,9 +12,13 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(10);
+        $keyword = $request->input('q');
+
+        $users = User::where('name', 'LIKE', "%{$keyword}%")
+                    ->orWhere('email', 'LIKE', "%{$keyword}%")
+                    ->paginate(10);
 
         return view('admin.users.index', ['users' => $users]);
     }

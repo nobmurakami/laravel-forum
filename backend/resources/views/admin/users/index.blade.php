@@ -10,9 +10,9 @@
             <div class="card-header">
                 <h3 class="card-title">ユーザー一覧</h3>
                 <div class="card-tools">
-                    <form action='#' method="get">
+                    <form action="{{ route('admin.users.index') }}" method="get">
                         <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="user_search" class="form-control float-right" placeholder="ユーザーを検索">
+                            <input type="text" name="q" class="form-control float-right" placeholder="ユーザーを検索">
 
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-default">
