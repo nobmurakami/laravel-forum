@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (Auth::guard('user')->check())
+    @if (Auth::check())
         <a href="{{ route('threads.create') }}" role="button" class="btn btn-primary">スレッドを作成する</a>
     @endif
 

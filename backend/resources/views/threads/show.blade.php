@@ -3,7 +3,7 @@
 @section('content')
     @include('shared.thread-header', ['thread' => $thread])
 
-    @if (Auth::guard('user')->check())
+    @if (Auth::check())
         <div class="d-sm-flex justify-content-between align-items-start mt-3">
             {{-- 投稿ボタン --}}
             <div class="mb-2 mb-sm-n2">
@@ -53,7 +53,7 @@
                                     <button class="btn btn-link text-decoration-none py-0 px-1 mt-3 mr-2" data-toggle="popover" title="この投稿へのコメント（{{ $post->replies->count() }}件）" data-content="@include('threads.partials.replies-popover')"><i class="far fa-comment"></i>&nbsp;{{ $post->replies->count() }}</button>
                                 @endif
 
-                                @if (Auth::guard('user')->check())
+                                @if (Auth::check())
                                     <a href="{{ route('posts.reply', $post) }}" role="button" class="btn btn-outline-secondary btn-sm mt-3">コメントする</a>
                                 @endif
                             </div>
@@ -73,7 +73,7 @@
         @endif
     </div>
 
-    @if (Auth::guard('user')->check())
+    @if (Auth::check())
         <div class="container post-btn">
             <a href="{{ route('threads.posts.create', $thread) }}" role="button" class="btn btn-primary d-flex flex-column justify-content-center">
                 <div class=""><i class="fas fa-pen fa-2x"></i></div>
