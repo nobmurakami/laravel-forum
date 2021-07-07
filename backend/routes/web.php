@@ -24,9 +24,12 @@ Route::resource('threads.posts', 'PostController')->shallow()->only([
 ]);
 Route::delete('post_images/{post}', 'PostController@destroyImage')->name('posts.image.destroy');
 
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function (){
-    Route::get('/', 'AdminController@home')->name('home');
-    Route::resource('users', 'UserController')->only([
-        'index'
-    ]);
+Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
+
+    Route::middleware(['auth', 'can:admin'])->group(function () {
+        Route::get('/', 'AdminHomeController@index')->name('home');
+        Route::resource('users', 'AdminUserController')->only([
+            'index'
+        ]);
+    });
 });

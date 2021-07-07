@@ -24,20 +24,22 @@
                 </div>
             </div>
             <div class="card-body table-responsive p-0">
-                <table class="table table-hover">
-                    <thead class="thead-light">
+                <table class="table table-bordered table-hover">
+                    <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">名前</th>
-                            <th scope="col">メールアドレス</th>
-                            <th scope="col">作成日時</th>
-                            <th scope="col">更新日時</th>
+                            <th scope="col" class="text-nowrap">ID</th>
+                            <th scope="col" class="text-nowrap">権限</th>
+                            <th scope="col" class="text-nowrap">名前</th>
+                            <th scope="col" class="text-nowrap">メールアドレス</th>
+                            <th scope="col" class="text-nowrap">作成日時</th>
+                            <th scope="col" class="text-nowrap">更新日時</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
                             <tr>
-                                <th scope="row">{{ $user->id }}</th>
+                                <td scope="row">{{ $user->id }}</th>
+                                <td class="text-nowrap">{{ $user->role === 1 ? '管理者' : '' }}</td>
                                 <td style="min-width: 200px;">{{ $user->name }}</td>
                                 <td class="text-nowrap">{{ $user->email }}</td>
                                 <td class="text-nowrap">{{ $user->created_at }}</td>

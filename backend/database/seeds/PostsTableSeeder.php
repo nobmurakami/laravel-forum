@@ -17,7 +17,7 @@ class PostsTableSeeder extends Seeder
 
         Post::insert([
             [
-                'user_id' => 1,
+                'user_id' => 2,
                 'thread_id' => 1,
                 'content' => 'ここは総合スレッドです',
                 'image_path' => 'post_images/1.jpg',
@@ -27,7 +27,7 @@ class PostsTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             [
-                'user_id' => 2,
+                'user_id' => 3,
                 'thread_id' => 1,
                 'content' => 'こんにちは',
                 'image_path' => 'post_images/2.jpg',
@@ -37,7 +37,7 @@ class PostsTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             [
-                'user_id' => 1,
+                'user_id' => 2,
                 'thread_id' => 1,
                 'content' => '山手線ゲームしよう
 
@@ -49,7 +49,7 @@ class PostsTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             [
-                'user_id' => 2,
+                'user_id' => 3,
                 'thread_id' => 1,
                 'content' => '池袋',
                 'image_path' => 'post_images/5.png',
@@ -59,7 +59,7 @@ class PostsTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             [
-                'user_id' => 3,
+                'user_id' => 4,
                 'thread_id' => 1,
                 'content' => '新宿',
                 'image_path' => 'post_images/6.png',
@@ -69,7 +69,7 @@ class PostsTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             [
-                'user_id' => 1,
+                'user_id' => 2,
                 'thread_id' => 1,
                 'content' => '削除テスト',
                 'image_path' => null,
@@ -79,7 +79,7 @@ class PostsTableSeeder extends Seeder
                 'deleted_at' => $now,
             ],
             [
-                'user_id' => 2,
+                'user_id' => 3,
                 'thread_id' => 1,
                 'content' => 'コメント先の投稿が削除された場合の表示テスト',
                 'image_path' => null,
@@ -89,7 +89,7 @@ class PostsTableSeeder extends Seeder
                 'deleted_at' => null,
             ],
             [
-                'user_id' => 3,
+                'user_id' => 4,
                 'thread_id' => 2,
                 'content' => "吾輩は猫である。名前はまだ無い。
 
