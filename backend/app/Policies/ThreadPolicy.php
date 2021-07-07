@@ -53,7 +53,7 @@ class ThreadPolicy
      */
     public function update(User $user, Thread $thread)
     {
-        return $user === $thread->user;
+        return $user->id === $thread->user_id;
     }
 
     /**
@@ -65,7 +65,7 @@ class ThreadPolicy
      */
     public function delete(User $user, Thread $thread)
     {
-        return ($user === $thread->user || $user->isAdmin());
+        return ($user->id === $thread->user_id || $user->isAdmin());
     }
 
     /**
