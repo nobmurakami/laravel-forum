@@ -13,13 +13,9 @@ class AdminUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $keyword = $request->input('q');
-
-        $users = User::where('name', 'LIKE', "%{$keyword}%")
-                    ->orWhere('email', 'LIKE', "%{$keyword}%")
-                    ->paginate(10);
+        $users = User::all();
 
         return view('admin.users.index', ['users' => $users]);
     }

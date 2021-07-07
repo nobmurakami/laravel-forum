@@ -9,22 +9,9 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">ユーザー一覧</h3>
-                <div class="card-tools">
-                    <form action="{{ route('admin.users.index') }}" method="get">
-                        <div class="input-group input-group-sm" style="width: 150px;">
-                            <input type="text" name="q" class="form-control float-right" placeholder="ユーザーを検索">
-
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-default">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
             </div>
-            <div class="card-body table-responsive p-0">
-                <table class="table table-bordered table-hover">
+            <div class="card-body table-responsive">
+                <table id="users-table" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th scope="col" class="text-nowrap">ID</th>
@@ -49,12 +36,16 @@
                     </tbody>
                 </table>
             </div>
-            <div class="card-footer clearfix">
-                {{ $users->links('shared.pagination') }}
-            </div>
         </div>
-
     @else
         <p>まだユーザーが存在しません。</p>
     @endif
 @endsection
+
+@section('js')
+<script>
+    $(function () {
+        $("#users-table").DataTable();
+    });
+</script>
+@stop

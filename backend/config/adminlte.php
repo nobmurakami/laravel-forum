@@ -45,9 +45,9 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo' => '<b>Laravel Forum</b> Admin',
+    'logo_img' => 'images/admin_icon.png',
+    'logo_img_class' => 'brand-image',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'AdminLTE',
@@ -239,8 +239,8 @@ return [
         // Sidebar items:
         [
             'text' => 'user_management',
-            'url'  => 'admin/users',
-            'icon' => 'fas fa-users',
+            'route'  => 'admin.users.index',
+            'icon' => 'fas fa-users fa-fw mr-1',
         ],
         // [
         //     'type' => 'sidebar-menu-search',
@@ -361,7 +361,7 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
