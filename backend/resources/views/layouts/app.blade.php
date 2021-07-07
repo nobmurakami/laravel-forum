@@ -59,9 +59,16 @@
                                     <span class="dropdown-item-text bg-primary text-light text-center mb-2">
                                         {{ Auth::user()->name }}
                                     </span>
+                                    @if (Auth::user()->isAdmin())
+                                        <a class="dropdown-item" href="{{ route('admin.home') }}" target="_blank" rel="noopener noreferrer">
+                                            <i class="fas fa-cog fa-fw mr-1"></i>
+                                            管理画面
+                                        </a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
+                                        <i class="fas fa-sign-out-alt fa-fw mr-1"></i>
                                         {{ __('auth.Logout') }}
                                     </a>
 
