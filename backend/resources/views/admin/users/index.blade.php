@@ -38,10 +38,10 @@
                         @foreach ($users as $user)
                             <tr>
                                 <th scope="row">{{ $user->id }}</th>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->created_at }}</td>
-                                <td>{{ $user->updated_at }}</td>
+                                <td style="min-width: 200px;">{{ $user->name }}</td>
+                                <td class="text-nowrap">{{ $user->email }}</td>
+                                <td class="text-nowrap">{{ $user->created_at }}</td>
+                                <td class="text-nowrap">{{ $user->updated_at }}</td>
                             </tr>
                         @endforeach
                     </tbody>
