@@ -5,23 +5,25 @@
         </button>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
             @can('update', $post)
-            <form action="{{ route('posts.edit', $post) }}" method="get">
-                <button type="submit" class="dropdown-item">
-                    <i class="fas fa-edit fa-fw mr-1"></i>
-                    編集
-                </button>
-            </form>
-            <button type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteImage_{{ $post->id }}">
-                <i class="fas fa-folder-minus fa-fw mr-1"></i>
-                画像の削除
-            </button>
+                <form action="{{ route('posts.edit', $post) }}" method="get">
+                    <button type="submit" class="dropdown-item">
+                        <i class="fas fa-edit fa-fw mr-1"></i>
+                        編集
+                    </button>
+                </form>
+                @if (isset($post->image_path))
+                    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#deleteImage_{{ $post->id }}">
+                        <i class="fas fa-folder-minus fa-fw mr-1"></i>
+                        画像の削除
+                    </button>
+                @endif
             @endcan
 
             @can('delete', $post)
-            <button type="button" class="dropdown-item" data-toggle="modal" data-target="#deletePost_{{ $post->id }}">
-                <i class="far fa-trash-alt fa-fw mr-1"></i>
-                削除
-            </button>
+                <button type="button" class="dropdown-item" data-toggle="modal" data-target="#deletePost_{{ $post->id }}">
+                    <i class="far fa-trash-alt fa-fw mr-1"></i>
+                    削除
+                </button>
             @endcan
         </div>
     </div>
