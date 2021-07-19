@@ -50,14 +50,13 @@ class ThreadController extends Controller
 
             $thread = Thread::create($validated['thread']);
             $post = $thread->posts()->create($validated['post']);
+
             // 画像アップロード
             if ($request->hasImage()) {
-                // updated_atを更新しないようにする
-                $post->timestamps = false;
-                // 画像ファイルをストレージのpublicディスクに保存。失敗したら例外を返す
-                $path = $post->storeImageFile($request->image());
-                // 画像パスをDBに保存。失敗したら例外を返す
-                $post->saveImagePath($path);
+                $result = $post->uploadImage($request->image());
+                if (!$result) {
+                    throw new \Exception('failed to Post::uploadImage().');
+                }
             }
 
             DB::commit();

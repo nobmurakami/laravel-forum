@@ -20,7 +20,7 @@ class PostController extends Controller
     {
         return view('posts.create', [
             'thread' => $thread,
-            'post' => new Post()
+            'post' => new Post(),
         ]);
     }
 
@@ -40,12 +40,10 @@ class PostController extends Controller
 
             // 画像アップロード
             if ($request->hasImage()) {
-                // updated_atを更新しないようにする
-                $post->timestamps = false;
-                // 画像ファイルをストレージのpublicディスクに保存。失敗したら例外を返す
-                $path = $post->storeImageFile($request->image());
-                // 画像パスをDBに保存。失敗したら例外を返す
-                $post->saveImagePath($path);
+                $result = $post->uploadImage($request->image());
+                if (!$result) {
+                    throw new \Exception('failed to Post::uploadImage().');
+                }
             }
 
             DB::commit();
@@ -104,10 +102,10 @@ class PostController extends Controller
 
             // 画像アップロード
             if ($request->hasImage()) {
-                // 画像ファイルをストレージのpublicディスクに保存。失敗したら例外を返す
-                $path = $post->storeImageFile($request->image());
-                // 画像パスをDBに保存。失敗したら例外を返す
-                $post->saveImagePath($path);
+                $result = $post->uploadImage($request->image());
+                if (!$result) {
+                    throw new \Exception('failed to Post::uploadImage().');
+                }
             }
 
             DB::commit();
@@ -151,25 +149,11 @@ class PostController extends Controller
         $this->authorize('update', $post);
 
         try {
-            DB::beginTransaction();
-
-            $filePath = $post->image_path;
-
-            $result = $post->update(['image_path' => null]);
+            $result = $post->deleteImage();
             if (!$result) {
-                throw new \Exception('failed to save post');
+                throw new \Exception('failed to Post::deleteImage()');
             }
-
-            Storage::disk('public')->delete($filePath);
-            // ファイルが削除されているか確認し、まだあれば例外を投げる
-            if (Storage::exists('public/' . $filePath)) {
-                throw new \Exception('failed to delete image file');
-            }
-
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollBack();
-
             report($e);
 
             return back()->withFailure('画像の削除に失敗しました。しばらく時間をおいてから再度お試しください');

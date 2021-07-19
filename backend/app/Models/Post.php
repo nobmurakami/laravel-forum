@@ -50,16 +50,36 @@ class Post extends Model
         return $this->belongsTo('App\Models\Post', 'reply_to_id')->withTrashed();
     }
 
-    public function saveImagePath(string $imagePath)
+    public function uploadImage(UploadedFile $file)
     {
         try {
-            $this->fill(['image_path' => $imagePath]);
-            $result = $this->save();
-
-            // 例外が発生せずにfalseが返ってきたら例外を投げる
-            if (!$result) {
-                throw new \Exception('failed to save post');
+            $path = $this->storeImageFile($file);
+            if (!$path) {
+                throw new \Exception('failed to storeImageFile().');
             }
+
+            $result = $this->update(['image_path' => $path]);
+        } catch (\Exception $e) {
+            Log::error('failed to ' . __CLASS__ . '::' .  __FUNCTION__);
+
+            throw $e;
+        }
+
+        return $result;
+    }
+
+    public function deleteImage()
+    {
+        try {
+            $path = $this->image_path;
+
+            Storage::disk('public')->delete($path);
+            // ファイルが削除されているか確認し、まだあれば例外を投げる
+            if (Storage::exists('public/' . $path)) {
+                throw new \Exception('failed to delete image file');
+            }
+
+            $result = $this->update(['image_path' => null]);
         } catch (\Exception $e) {
             Log::error('failed to ' . __CLASS__ . '::' .  __FUNCTION__);
 
