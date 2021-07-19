@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Thread;
 use App\Models\Post;
+use App\Http\Requests\PostRequest;
 
 class ThreadRequest extends FormRequest
 {
@@ -25,32 +26,38 @@ class ThreadRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = (array) Thread::$rules;
+        $rules = (array) (Thread::$rules ?? []);
 
-        $route =  $this->route()->getName();
-        if ($route === 'threads.store') {
-            $rules = array_merge($rules, (array) Post::$rules);
+        if ($this->routeIs('threads.store')) {
+            $postRules = (array) (Post::$rules ?? []);
+            $rules = array_merge($rules, $postRules);
         }
 
         return $rules;
     }
 
+    protected function prepareForValidation()
+    {
+        if ($this->has('post.content')) {
+            $this->merge([
+                'post' => [
+                    'content' => crlf2lf($this->input('post.content')),
+                ],
+            ]);
+        }
+    }
+
     public function validationData()
     {
-        $threadParams = $this->all()['thread'];
-        $postParams = [];
+        $threadParams = $this->allowed()['thread'];
 
         $userId = $this->user()->id;
         $threadParams['user_id'] = $userId;
 
-        $route =  $this->route()->getName();
-        if ($route === 'threads.store') {
-            $postParams = $this->all()['post'];
+        $postParams = [];
+        if ($this->routeIs('threads.store')) {
+            $postParams = $this->allowed()['post'];
             $postParams['user_id'] = $userId;
-
-            if (isset($postParams['content'])) {
-                $postParams['content'] = crlf2lf($postParams['content']);
-            }
         }
 
         return [
@@ -61,31 +68,34 @@ class ThreadRequest extends FormRequest
 
     public function attributes()
     {
-        $threadAttrs = [];
-        if (property_exists('App\Models\Thread', 'requestAttrs')) {
-            $threadAttrs = (array) Thread::$requestAttrs;
-        }
-
-        $postAttrs = [];
-        if (property_exists('App\Models\Post', 'requestAttrs')) {
-            $postAttrs = (array) Post::$requestAttrs;
-        }
+        $threadAttrs = (array) (Thread::$requestAttrs ?? []);
+        $postAttrs = (array) (Post::$requestAttrs ?? []);
 
         return array_merge($threadAttrs, $postAttrs);
     }
 
     public function messages()
     {
-        $threadMsgs = [];
-        if (property_exists('App\Models\Thread', 'messages')) {
-            $threadMsgs = (array) Thread::$messages;
-        }
-
-        $postMsgs = [];
-        if (property_exists('App\Models\Post', 'messages')) {
-            $postMsgs = (array) Post::$messages;
-        }
+        $threadMsgs = (array) (Thread::$messages ?? []);
+        $postMsgs = (array) (Post::$messages ?? []);
 
         return array_merge($threadMsgs, $postMsgs);
+    }
+
+    public function allowed()
+    {
+        return $this->only(['thread.title', 'post.content', 'post.image']);
+    }
+
+    public function hasImage()
+    {
+        $postRequest = app(PostRequest::class);
+        return $postRequest->hasImage();
+    }
+
+    public function image()
+    {
+        $postRequest = app(PostRequest::class);
+        return $postRequest->image();
     }
 }

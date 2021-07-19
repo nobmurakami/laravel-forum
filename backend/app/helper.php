@@ -12,8 +12,11 @@ if (!function_exists('safeBr')) {
 
 // フォームに入力された改行コード[\r\n]を[\n]に変換する
 if (!function_exists('crlf2lf')) {
-    function crlf2lf(string $str): string
+    function crlf2lf(?string $str): ?string
     {
-        return str_replace("\r\n", "\n", $str);
+        if ($str !== null) {
+            $str = str_replace("\r\n", "\n", $str);
+        }
+        return $str;
     }
 }

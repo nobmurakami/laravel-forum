@@ -17,9 +17,9 @@ class ThreadController extends Controller
      */
     public function index()
     {
-        $threads = Thread::withCount('posts')->get();
-
-        return view('threads.index', ['threads' => $threads]);
+        return view('threads.index', [
+            'threads' => Thread::withCount('posts')->get(),
+        ]);
     }
 
     /**
@@ -29,10 +29,10 @@ class ThreadController extends Controller
      */
     public function create()
     {
-        $thread = new Thread();
-        $post = new Post();
-
-        return view('threads.create', ['thread' => $thread, 'post' => $post]);
+        return view('threads.create', [
+            'thread' => new Thread(),
+            'post' => new Post(),
+        ]);
     }
 
     /**
@@ -50,15 +50,12 @@ class ThreadController extends Controller
 
             $thread = Thread::create($validated['thread']);
             $post = $thread->posts()->create($validated['post']);
-
             // 画像アップロード
-            if ($request->hasFile('post.image')) {
-                $file = $request->file('post.image');
-
+            if ($request->hasImage()) {
                 // updated_atを更新しないようにする
                 $post->timestamps = false;
                 // 画像ファイルをストレージのpublicディスクに保存。失敗したら例外を返す
-                $path = $post->storeImageFile($file);
+                $path = $post->storeImageFile($request->image());
                 // 画像パスをDBに保存。失敗したら例外を返す
                 $post->saveImagePath($path);
             }
@@ -83,9 +80,10 @@ class ThreadController extends Controller
      */
     public function show(Thread $thread)
     {
-        $posts = $thread->posts()->withTrashed()->with(['user', 'replies', 'replies.user', 'replyTo', 'replyTo.user'])->get();
-
-        return view('threads.show', ['thread' => $thread, 'posts' => $posts]);
+        return view('threads.show', [
+            'thread' => $thread,
+            'posts' => $thread->posts()->withTrashed()->with(['user', 'replies', 'replies.user', 'replyTo', 'replyTo.user'])->get(),
+        ]);
     }
 
     /**
@@ -98,7 +96,9 @@ class ThreadController extends Controller
     {
         $this->authorize('update', $thread);
 
-        return view('threads.edit', ['thread' => $thread]);
+        return view('threads.edit', [
+            'thread' => $thread,
+        ]);
     }
 
     /**
@@ -112,18 +112,14 @@ class ThreadController extends Controller
     {
         $this->authorize('update', $thread);
 
-        $validated = $request->validated();
-
         try {
-            $thread->fill($validated['thread']);
+            $thread->fill($request->validated()['thread']);
 
-            $dirty = $thread->getDirty();
-            if (count($dirty) === 0) {
+            if ($thread->isClean()) {
                 return redirect()->route('threads.show', $thread)->withInfo('変更はありません');
             }
 
             $result = $thread->save();
-            // 例外が発生せずにfalseが返ってきたら例外を投げる
             if (!$result) {
                 throw new \Exception('failed to save thread');
             }
@@ -148,7 +144,6 @@ class ThreadController extends Controller
 
         try {
             $result = $thread->delete();
-            // 例外が発生せずに失敗したら例外を投げる
             if (!$result) {
                 throw new \Exception('failed to delete thread');
             }

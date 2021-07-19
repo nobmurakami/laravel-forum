@@ -22,8 +22,8 @@ class Post extends Model
     public static $rules = [
         'post.content' => 'required|max:1000',
         'post.image' => 'file|image|mimes:jpeg,png,gif|max:5120',
-        'post.user_id' => 'required',
         'post.reply_to_id' => '',
+        'post.user_id' => 'required',
     ];
 
     public static $messages = [

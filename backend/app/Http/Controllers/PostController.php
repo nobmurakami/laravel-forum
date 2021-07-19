@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Thread;
 use App\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PostRequest;
@@ -19,9 +18,10 @@ class PostController extends Controller
      */
     public function create(Thread $thread)
     {
-        $post = new Post();
-
-        return view('posts.create', ['thread' => $thread, 'post' => $post]);
+        return view('posts.create', [
+            'thread' => $thread,
+            'post' => new Post()
+        ]);
     }
 
     /**
@@ -33,15 +33,13 @@ class PostController extends Controller
      */
     public function store(PostRequest $request, Thread $thread)
     {
-        $validated = $request->validated();
-
         try {
             DB::beginTransaction();
 
-            $post = $thread->posts()->create($validated);
+            $post = $thread->posts()->create($request->validated());
 
             // 画像アップロード
-            if ($request->hasFile('post.image')) {
+            if ($request->hasImage()) {
                 $file = $request->file('post.image');
 
                 // updated_atを更新しないようにする
@@ -74,9 +72,10 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
-        $thread = $post->thread;
-
-        return view('posts.edit', ['thread' => $thread, 'post' => $post]);
+        return view('posts.edit', [
+            'thread' => $post->thread,
+            'post' => $post,
+        ]);
     }
 
     /**
@@ -90,27 +89,23 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
-        $validated = $request->validated();
-
         try {
             DB::beginTransaction();
 
-            $post->fill($validated);
+            $post->fill($request->validated());
 
             // 内容に変更がなく、画像がアップロードされていなければ処理を終了
-            $dirty = $post->getDirty();
-            if (count($dirty) === 0 && ! $request->hasFile('post.image')) {
+            if ($post->isClean() && ! $request->hasImage()) {
                 return redirect()->route('threads.show', $post->thread)->withInfo('変更はありません');
             }
 
             $result = $post->save();
-            // 例外が発生せずにfalseが返ってきたら例外を投げる
             if (!$result) {
                 throw new \Exception('failed to save post');
             }
 
             // 画像アップロード
-            if ($request->hasFile('post.image')) {
+            if ($request->hasImage()) {
                 $file = $request->file('post.image');
 
                 // 画像ファイルをストレージのpublicディスクに保存。失敗したら例外を返す
@@ -143,7 +138,6 @@ class PostController extends Controller
 
         try {
             $result = $post->delete();
-            // 例外が発生せずに失敗したら例外を投げる
             if (!$result) {
                 throw new \Exception('failed to delete post');
             }
@@ -165,9 +159,7 @@ class PostController extends Controller
 
             $filePath = $post->image_path;
 
-            $post->fill(['image_path' => null]);
-            $result = $post->save();
-            // 例外が発生せずにfalseが返ってきたら例外を投げる
+            $result = $post->update(['image_path' => null]);
             if (!$result) {
                 throw new \Exception('failed to save post');
             }
@@ -192,10 +184,10 @@ class PostController extends Controller
 
     public function reply(Post $replyTo)
     {
-        $post = new Post();
-
-        $thread = $replyTo->thread;
-
-        return view('posts.reply', ['thread' => $thread, 'post' => $post, 'replyTo' => $replyTo]);
+        return view('posts.reply', [
+            'thread' => $replyTo->thread,
+            'post' => new Post(),
+            'replyTo' => $replyTo,
+        ]);
     }
 }

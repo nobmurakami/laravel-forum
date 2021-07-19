@@ -24,27 +24,34 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = Post::$rules;
+        $rules = (array) (Post::$rules ?? []);
 
-        $route = $this->route()->getName();
-        if ($route === 'threads.posts.store') {
+        if ($this->routeIs('threads.posts.store')) {
             $rules['post.thread_id'] = 'required';
+            $rules['post.user_id'] = 'required';
         }
 
         return $rules;
     }
 
+    protected function prepareForValidation()
+    {
+        if ($this->has('post.content')) {
+            $this->merge([
+                'post' => [
+                    'content' => crlf2lf($this->input('post.content')),
+                ],
+            ]);
+        }
+    }
+
     public function validationData()
     {
-        $postParams = $this->all()['post'];
-        if (isset($postParams['content'])) {
-            $postParams['content'] = crlf2lf($postParams['content']);
-        }
+        $postParams = $this->allowed()['post'];
 
         $postParams['user_id'] = $this->user()->id;
 
-        $route = $this->route()->getName();
-        if ($route === 'threads.posts.store') {
+        if ($this->routeIs('threads.posts.store')) {
             $postParams['thread_id'] = $this->route()->parameter('thread')->id;
         }
 
@@ -53,26 +60,31 @@ class PostRequest extends FormRequest
 
     public function attributes()
     {
-        $attributes = [];
-        if (property_exists('App\Models\Post', 'requestAttrs')) {
-            $attributes = (array) Post::$requestAttrs;
-        }
-
-        return $attributes;
+        return (array) (Post::$requestAttrs ?? []);
     }
 
     public function messages()
     {
-        $messages = [];
-        if (property_exists('App\Models\Post', 'messages')) {
-            $messages = (array) Post::$messages;
-        }
-
-        return $messages;
+        return (array) (Post::$messages ?? []);
     }
 
     public function validated()
     {
         return $this->validator->validated()['post'];
+    }
+
+    public function allowed()
+    {
+        return $this->only(['post.content', 'post.image']);
+    }
+
+    public function hasImage()
+    {
+        return $this->hasFile('post.image');
+    }
+
+    public function image()
+    {
+        return $this->file('post.image');
     }
 }
