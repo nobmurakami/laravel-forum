@@ -100,7 +100,7 @@ class PostController extends Controller
             // 内容に変更がなく、画像がアップロードされていなければ処理を終了
             $dirty = $post->getDirty();
             if (count($dirty) === 0 && ! $request->hasFile('post.image')) {
-                return redirect()->route('threads.show', $post->thread)->with('msg_info', '変更はありません');
+                return redirect()->route('threads.show', $post->thread)->withInfo('変更はありません');
             }
 
             $result = $post->save();

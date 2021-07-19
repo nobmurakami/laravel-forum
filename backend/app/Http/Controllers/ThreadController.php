@@ -119,7 +119,7 @@ class ThreadController extends Controller
 
             $dirty = $thread->getDirty();
             if (count($dirty) === 0) {
-                return redirect()->route('threads.show', $thread)->with('msg_info', '変更はありません');
+                return redirect()->route('threads.show', $thread)->withInfo('変更はありません');
             }
 
             $result = $thread->save();

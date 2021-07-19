@@ -18,6 +18,6 @@
 @endif
 
 {{--その他--}}
-@if (session('msg_info'))
-    <input type="hidden" data-toastr="info" value="{{ session('msg_info') }}">
+@if (session('info'))
+    <input type="hidden" data-toastr="info" value="{{ session('info') }}">
 @endif
