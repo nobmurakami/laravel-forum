@@ -1,0 +1,83 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Font Awesome
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
+// toastr
+@import "~toastr/toastr.scss";
+
+body {
+  letter-spacing: 0.1em;
+  text-align: justify;
+}
+
+a.anchor {
+  display: block;
+  position: relative;
+  top: -60px;
+}
+
+.post-index {
+  margin-bottom: 90px;
+}
+
+.popover-body {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.post-image {
+  max-height: 400px;
+  width: auto;
+
+  .reply-to & {
+    max-height: 200px;
+  }
+
+  .popover & {
+    max-height: 100px;
+  }
+}
+
+.img-preview {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.post-btn {
+  position: fixed;
+  bottom: 20px;
+
+  .btn {
+    float:right;
+    margin-right: 30px;
+    height: 80px;
+    width: 80px;
+    border-radius: 20%;
+  }
+}
+
+section.post-card {
+  .post-link {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+  }
+}
+
+.user-menu {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
