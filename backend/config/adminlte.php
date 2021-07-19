@@ -209,8 +209,8 @@ return [
     */
 
     'enabled_laravel_mix' => false,
-    'laravel_mix_css_path' => 'css/app.css',
-    'laravel_mix_js_path' => 'js/app.js',
+    'laravel_mix_css_path' => 'css/admin.css',
+    'laravel_mix_js_path' => 'js/admin.js',
 
     /*
     |--------------------------------------------------------------------------
@@ -376,7 +376,7 @@ return [
                 [
                     'type' => 'css',
                     'asset' => true,
-                    'location' => 'vendor/datatables//css/dataTables.bootstrap4.min.css',
+                    'location' => 'vendor/datatables/css/dataTables.bootstrap4.min.css',
                 ],
             ],
         ],
