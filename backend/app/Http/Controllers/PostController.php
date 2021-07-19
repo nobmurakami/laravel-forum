@@ -40,12 +40,10 @@ class PostController extends Controller
 
             // 画像アップロード
             if ($request->hasImage()) {
-                $file = $request->file('post.image');
-
                 // updated_atを更新しないようにする
                 $post->timestamps = false;
                 // 画像ファイルをストレージのpublicディスクに保存。失敗したら例外を返す
-                $path = $post->storeImageFile($file);
+                $path = $post->storeImageFile($request->image());
                 // 画像パスをDBに保存。失敗したら例外を返す
                 $post->saveImagePath($path);
             }
@@ -106,10 +104,8 @@ class PostController extends Controller
 
             // 画像アップロード
             if ($request->hasImage()) {
-                $file = $request->file('post.image');
-
                 // 画像ファイルをストレージのpublicディスクに保存。失敗したら例外を返す
-                $path = $post->storeImageFile($file);
+                $path = $post->storeImageFile($request->image());
                 // 画像パスをDBに保存。失敗したら例外を返す
                 $post->saveImagePath($path);
             }
