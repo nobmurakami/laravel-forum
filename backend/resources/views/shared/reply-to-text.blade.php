@@ -3,7 +3,7 @@
         <span class="text-muted">削除された投稿へのコメント</span>
     @else
         <div class="align-items-center">
-            <a href="#post_{{ $post->replyTo->id }}" role="button" data-toggle="popover" data-content="@include('threads.partials.reply-to-popover')">
+            <a href="#p{{ $post->replyTo->id }}" role="button" data-toggle="popover" data-content="@include('threads.partials.reply-to-popover')">
                 {{ $post->replyTo->user->name }}
             </a>
             <span class="text-muted">さんの投稿へのコメント</span>

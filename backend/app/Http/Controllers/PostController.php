@@ -55,7 +55,8 @@ class PostController extends Controller
             return back()->withInput()->withFailure('投稿の保存に失敗しました。しばらく時間をおいてから再度お試しください');
         }
 
-        return redirect()->route('threads.show', $thread)->withSuccess('投稿が完了しました');
+        return redirect()->to(routeWithFragment('threads.show', $thread, '#p' . $post->id))
+                         ->withSuccess('投稿が完了しました');
     }
 
     /**
@@ -92,7 +93,8 @@ class PostController extends Controller
 
             // 内容に変更がなく、画像がアップロードされていなければ処理を終了
             if ($post->isClean() && ! $request->hasImage()) {
-                return redirect()->route('threads.show', $post->thread)->withInfo('変更はありません');
+                return redirect()->to(routeWithFragment('threads.show', $post->thread, '#p' . $post->id))
+                                 ->withInfo('変更はありません');
             }
 
             $result = $post->save();
@@ -116,8 +118,8 @@ class PostController extends Controller
 
             return back()->withInput()->withFailure('投稿の更新に失敗しました。しばらく時間をおいてから再度お試しください');
         }
-
-        return redirect()->route('threads.show', $post->thread)->withSuccess('投稿を更新しました');
+        return redirect()->to(routeWithFragment('threads.show', $post->thread, '#p' . $post->id))
+                         ->withSuccess('投稿を更新しました');
     }
 
     /**

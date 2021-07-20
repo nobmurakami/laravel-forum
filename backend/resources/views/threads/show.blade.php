@@ -18,7 +18,7 @@
     <div class="mt-4 post-index">
         @if ($posts->isNotEmpty())
             @foreach ($posts as $i => $post)
-                <a id="post_{{ $post->id }}" class="anchor"></a>
+                <a id="p{{ $post->id }}" class="anchor"></a>
 
                 <section class="post-card card shadow-sm mb-2">
                     <div class="d-flex flex-column card-body">
@@ -61,7 +61,7 @@
 
                         {{-- 投稿のURL取得用リンク --}}
                         <div class="post-link">
-                            <a href="#post_{{ $post->id }}" class="text-muted text-decoration-none">
+                            <a href="#p{{ $post->id }}" class="text-muted text-decoration-none">
                                 #{{ $i + 1 }}
                             </a>
                         </div>

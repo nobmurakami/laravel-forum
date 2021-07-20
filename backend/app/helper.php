@@ -20,3 +20,14 @@ if (!function_exists('crlf2lf')) {
         return $str;
     }
 }
+
+// 名前付きルートにハッシュフラグメント（#fragment）を追加する
+if (!function_exists('routeWithFragment')) {
+    /**
+     *  @param  mixed  $parameters
+     */
+    function routeWithFragment(string $name, $parameters = [], string $fragment = ''): string
+    {
+        return route($name, $parameters) . $fragment;
+    }
+}

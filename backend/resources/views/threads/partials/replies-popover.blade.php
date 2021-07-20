@@ -2,7 +2,7 @@
     @if ($i !== 0)
         <div class='border-top my-2'></div>
     @endif
-    <a href='#post_{{ $reply->id }}' class='text-body text-decoration-none'>
+    <a href='#p{{ $reply->id }}' class='text-body text-decoration-none'>
         @if ($reply->trashed())
             <p class='text-muted mb-0'>削除された投稿</p>
         @else
